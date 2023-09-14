@@ -34,16 +34,16 @@ builder.Services.AddDbContext<OrderDbContext>(config =>
 
 builder.Services.AddMassTransit(config =>
 {
-    //config.UsingRabbitMq((context, cfg) =>
-    //{
-    //    cfg.ConfigureEndpoints(context);
-    //});
-
-    config.UsingAzureServiceBus((context, cfg) =>
+    config.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host(builder.Configuration["AzureServiceBusConnectionString"]);
         cfg.ConfigureEndpoints(context);
     });
+
+    //config.UsingAzureServiceBus((context, cfg) =>
+    //{
+    //    cfg.Host(builder.Configuration["AzureServiceBusConnectionString"]);
+    //    cfg.ConfigureEndpoints(context);
+    //});
 
     config.AddConsumers(Assembly.GetExecutingAssembly());
 });
